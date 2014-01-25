@@ -22,7 +22,8 @@ function create(){
   stages = game.add.group();
 
   // add stage into world
-  stage = stages.create(0, 500, 'stage');
+  var stage = stages.create(0, 500, 'stage');
+  stage.width = 800;
   stage.body.immovable = true;
   stage.body.velocity.x = -500;
 }
@@ -30,4 +31,14 @@ function create(){
 function update(){
   // collide the jumper and the stages
   game.physics.collide(jumper, stages);
+
+  // get most recently created stage
+  var lastStage = stages.getAt(stages.total-1);
+
+  // create new stage if the previous stage's rightmost edge is onscreen
+  if(lastStage.x + lastStage.width <= 800) {
+    var stage = stages.create(900, 500, 'stage');
+    stage.body.immovable = true;
+    stage.body.velocity.x = -500;
+  }
 }
