@@ -1,5 +1,9 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
+function getRandomInt(max, min){
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 function preload(){
   game.load.image('jumper', 'assets/jumper.png');
   game.load.image('stage', 'assets/stage.png');
@@ -37,7 +41,8 @@ function update(){
 
   // create new stage if the previous stage's rightmost edge is onscreen
   if(lastStage.x + lastStage.width <= 800) {
-    var stage = stages.create(900, 500, 'stage');
+    var stage = stages.create(800 + getRandomInt(500, 100), 500, 'stage');
+    stage.width = getRandomInt(500, 800);
     stage.body.immovable = true;
     stage.body.velocity.x = -500;
   }
